@@ -5,12 +5,14 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
         <title>Laravel</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css">
         <style>
             html, body {
                 background-color: #fff;
@@ -79,8 +81,18 @@
                     </div>
 
                 </form>
+
+                <form method="POST"
+                      action="/"
+                      class="dropzone"
+                      id="my-awesome-dropzone" enctype="multipart/form-data">
+                    {{csrf_field()}}
+
+                </form>
+
                 <img src="storage/images/ponty.jpg">
                 {{--<img src="storage/images/pontyresize.jpg">--}}
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.js"></script>
 
             </div>
         </div>
