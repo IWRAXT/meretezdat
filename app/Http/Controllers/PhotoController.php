@@ -56,21 +56,18 @@ class PhotoController extends Controller
     public function upload(Request $request)
     {
 
-
-
-
-
         if ($request->hasFile('file')) {
 
             $photo=new Photo();
-            $photo->name='ponty.jpg';
-
+            $photo->name=$request->file('file')->getClientOriginalName();
             $path = $request->file('file')->storeAs('public/images', $photo->name);
             $img = Image::make(storage_path('app/'.$path))
                 ->resize(100, 100)
                 ->save();
             $photo->save();
-            return redirect('/')->with('success','Working on upload');
+
+//            return response()->json(['success'=>$photo->name]);
+            return view('welcome');
         } else {
             return redirect('/')->with('success','Nincs file kiválasztva');
         }
