@@ -71,21 +71,26 @@
 
 
     <div class="content">
-        {{--<form method="POST" action="/" enctype="multipart/form-data">--}}
-            {{--{{csrf_field()}}--}}
+        <form method="POST" action="/" enctype="multipart/form-data">
+            {{csrf_field()}}
 
-            {{--<div class="form-group">--}}
-                {{--<label for="foto">Kép hozzáadás: </label>--}}
-                {{--<input type="file" class="form-control-file" id="file" name="foto">--}}
-                {{--<button type="submit" class="btn btn-primary">Update</button>--}}
-            {{--</div>--}}
+            <div class="form-group">
+                <label for="foto">Kép hozzáadás: </label>
+                <input type="file" class="form-control-file" id="file" name="foto">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
 
-        {{--</form>--}}
+        </form>
 
         <form method="POST"
               action="/"
               class="dropzone"
               id="my-awesome-dropzone" enctype="multipart/form-data">
+            <div class="fallback">
+                <input name="file" type="file" />
+            </div>
+            <div class="dz-message" data-dz-message><span> „Kattints ide a feltöltendő kép/képek kiválasztásához,<br> vagy egyszerűen húzd ide a képeket.” </span></div>
+
             {{csrf_field()}}
 
         </form>
@@ -104,7 +109,8 @@
             Dropzone.options.imageUpload = {
                 maxFile         :       1,
                 acceptedFiles: ".jpeg,.jpg,.png,.gif",
-                url: "http://fotos.test/"
+                url: "http://fotos.test/",
+
             };
         </script>
 
