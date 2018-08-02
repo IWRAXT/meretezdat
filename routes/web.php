@@ -16,12 +16,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::post('/', 'PhotoController@index');
+Route::post('/image', 'PhotoController@index');
 
 Route::get('/', function () {
 
-    return view('welcome');
+    return view('photo');
 });
 
-Route::post('/','PhotoController@upload');
+//Route::post('/','PhotoController@upload');
 

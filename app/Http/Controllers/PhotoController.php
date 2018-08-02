@@ -8,23 +8,18 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class PhotoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
-//        $imageName = $image->getClientOriginalName();
 //        $image->move(public_path('images'),$imageName);
 
-        if ($request->hasFile('foto')) {
+        if ($request->hasFile('file')) {
 
             $photo=new Photo();
-            $photo->name='ponty.jpg';
+            $photo->name=$request->file('file')->getClientOriginalName();
 
-            $path = $request->file('foto')->storeAs('public/images', $photo->name);
-            $img = Image::make(storage_path('app/'.$path))
+            $path = $request->file('file')->storeAs('public/images', $photo->name);
+            Image::make(storage_path('app/'.$path))
                 ->resize(100, 100)
                 ->save();
 
@@ -43,7 +38,7 @@ class PhotoController extends Controller
             //dd($img);
 
             $photo->save();
-            return view('welcome');
+            return response('ok',200);
         } else {
             return redirect('/')->with('success','Nincs file kiválasztva');
         }
@@ -53,26 +48,26 @@ class PhotoController extends Controller
 
 
 
-    public function upload(Request $request)
-    {
-
-        if ($request->hasFile('file')) {
-
-            $photo=new Photo();
-            $photo->name=$request->file('file')->getClientOriginalName();
-            $path = $request->file('file')->storeAs('public/images', $photo->name);
-            $img = Image::make(storage_path('app/'.$path))
-                ->resize(100, 100)
-                ->save();
-            $photo->save();
-
+//    public function upload(Request $request)
+//    {
+//
+//        if ($request->hasFile('file')) {
+//
+//            $photo=new Photo();
+//            $photo->name=$request->file('file')->getClientOriginalName();
+//            $path = $request->file('file')->storeAs('public/images', $photo->name);
+//            Image::make(storage_path('app/'.$path))
+//                ->resize(100, 100)
+//                ->save();
+//            $photo->save();
+//
 //            return response()->json(['success'=>$photo->name]);
-            return view('welcome');
-        } else {
-            return redirect('/')->with('success','Nincs file kiválasztva');
-        }
-
-    }
+//
+//        } else {
+//            return redirect('/')->with('success','Nincs file kiválasztva');
+//        }
+//
+//    }
 
 
     public function show($id)
