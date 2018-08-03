@@ -9,7 +9,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 class PhotoController extends Controller
 {
 
-    public function index(Request $request)
+    public function uploadImage(Request $request)
     {
 //        $image->move(public_path('images'),$imageName);
 
@@ -38,7 +38,8 @@ class PhotoController extends Controller
             //dd($img);
 
             $photo->save();
-            return response('ok',200);
+            return redirect('/');
+//            return response('ok',200);
         } else {
             return redirect('/')->with('success','Nincs file kiválasztva');
         }

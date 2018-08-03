@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::post('/image', 'PhotoController@index');
+Route::post('/image', 'PhotoController@uploadImage');
 
 Route::get('/', function () {
 
