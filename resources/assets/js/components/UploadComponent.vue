@@ -12,7 +12,7 @@
         <!--<vue-dropzone-->
         <!--id="dropzone"-->
         <!--:options="dropOptions"></vue-dropzone>-->
-        <!--:headers="csrfHeader">-->
+
         <!--ref="file"-->
         <!--@vdropzone-complete="afterComplete">-->
 
@@ -24,9 +24,7 @@
 
 <script>
     import vue2Dropzone from 'vue2-dropzone'
-    import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
-    console.log(vue2Dropzone);
     export default {
 
         data() {
@@ -34,11 +32,15 @@
                 file: '',
                 avatar: '',
                 dropzoneOptions: {
-                    url: 'https://httpbin.org/post',
+                    url: '/image',
+                    dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>„Kattints ide a feltöltendő kép/képek kiválasztásához,<br> vagy egyszerűen húzd ide a képeket.”",
                     thumbnailWidth: 150,
-                    maxFilesize: 0.5,
-                    headers: {"My-Awesome-Header": "header value"}
-                }
+                    maxFile: 1,
+                    // headers: {"My-Awesome-Header": "header value"},
+                    headers: {
+                        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                    }
+                },
                 // dropOptions: {
                 //     url: "https://fotos.test/image",
                 //     // thumbnailWidth: 150,
@@ -91,7 +93,7 @@
     }
 </script>
 <style scoped>
-    /*@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");*/
+
     img {
         height: 100px;
         width: auto;

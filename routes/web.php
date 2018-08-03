@@ -23,5 +23,7 @@ Route::get('/', function () {
     return view('photo');
 });
 
+
+
 //Route::post('/','PhotoController@upload');
 

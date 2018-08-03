@@ -13,6 +13,7 @@ class PhotoController extends Controller
     {
 //        $image->move(public_path('images'),$imageName);
 
+
         if ($request->hasFile('file')) {
 
             $photo=new Photo();
