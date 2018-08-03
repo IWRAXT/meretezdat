@@ -48072,6 +48072,19 @@ module.exports = function listToStyles (parentId, list) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
         /* harmony default export */
@@ -48082,7 +48095,7 @@ module.exports = function listToStyles (parentId, list) {
                     avatar: '',
                     dropzoneOptions: {
                         url: '/image',
-                        dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>„Kattints ide a feltöltendő kép/képek kiválasztásához,<br> vagy egyszerűen húzd ide a képeket.”",
+                        dictDefaultMessage: "„Kattints ide a feltöltendő kép/képek kiválasztásához,<br> vagy egyszerűen húzd ide a képeket.”<br><i class=\"fa fa-cloud-upload\"></i>",
                         thumbnailWidth: 150,
                         maxFile: 1,
                         // headers: {"My-Awesome-Header": "header value"},
@@ -50124,12 +50137,69 @@ module.exports = function listToStyles (parentId, list) {
                     _c("vue-dropzone", {
                         ref: "myVueDropzone",
                         attrs: {id: "dropzone", options: _vm.dropzoneOptions}
-                    })
+                    }),
+                    _vm._v(" "),
+                    _vm._m(0)
                 ],
                 1
             )
         }
-        var staticRenderFns = []
+        var staticRenderFns = [
+            function () {
+                var _vm = this
+                var _h = _vm.$createElement
+                var _c = _vm._self._c || _h
+                return _c("div", {staticClass: "container"}, [
+                    _c("h5", [
+                        _c("i", {staticClass: "material-icons"}, [_vm._v("collections")]),
+                        _vm._v("Kép szerkesztés")
+                    ]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("Kivágás")]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("Forgatás")]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("Tükrözés")]),
+                    _vm._v(" "),
+                    _c("h5", [
+                        _c("i", {staticClass: "material-icons"}, [_vm._v("collections")]),
+                        _vm._v("Kép átméretezés")
+                    ]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("25%")]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("50%")]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("75%")]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("Egyéni")]),
+                    _vm._v(" "),
+                    _c("h5", [
+                        _c("i", {staticClass: "material-icons"}, [_vm._v("collections")]),
+                        _vm._v("Válassz speciális réteget")
+                    ]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("Szürke")]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("Szépia")]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("Olajfesték")]),
+                    _vm._v(" "),
+                    _c("h5", [
+                        _c("i", {staticClass: "material-icons"}, [_vm._v("collections")]),
+                        _vm._v("Letöltés választott formátumban")
+                    ]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("JPG")]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("PNG")]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("BMP")]),
+                    _vm._v(" "),
+                    _c("button", {attrs: {type: "button"}}, [_vm._v("GIF")])
+                ])
+            }
+        ]
         render._withStripped = true
         module.exports = {render: render, staticRenderFns: staticRenderFns}
         if (false) {

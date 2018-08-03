@@ -7,6 +7,8 @@
     <title>Méretezd át! - Kép átméretezés programok nélkül</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     {{--CSRF Token--}}
     <meta name="csrf-token" content="{{csrf_token()}}">
     {{--Syles--}}
@@ -32,7 +34,7 @@
 
 @include('layouts.footer')
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-{{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>--}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 {{--<script src="{{asset('../js/app.js')}}"></script>--}}
 {{--<script src="{{ asset('../js/bootstrap.min.js') }}"></script>--}}

@@ -1,14 +1,6 @@
 <template>
     <div class="container">
-        <!--<div class="large-12 medium-12 small-12 cell">-->
-        <!--<label>File-->
-        <!--<input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>-->
-        <!--<img :src="avatar" alt="Image">-->
-        <!--</label>-->
-        <!--<button v-on:click="submitFile()">Submit</button>-->
-        <!--</div>-->
-
-        <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
+      <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
         <!--<vue-dropzone-->
         <!--id="dropzone"-->
         <!--:options="dropOptions"></vue-dropzone>-->
@@ -19,6 +11,27 @@
 
         <!--<input type="hidden" name="csrf-token" :value="csrfToken">-->
         <!--</vue-dropzone>-->
+      <div class=container>
+        <h5><i class="material-icons">collections</i>Kép szerkesztés</h5>
+        <button type="button">Kivágás</button>
+        <button type="button">Forgatás</button>
+        <button type="button">Tükrözés</button>
+        <h5><i class="material-icons">collections</i>Kép átméretezés</h5>
+        <button type="button">25%</button>
+        <button type="button">50%</button>
+        <button type="button">75%</button>
+        <button type="button">Egyéni</button>
+        <h5><i class="material-icons">collections</i>Válassz speciális réteget</h5>
+        <button type="button">Szürke</button>
+        <button type="button">Szépia</button>
+        <button type="button">Olajfesték</button>
+        <h5><i class="material-icons">collections</i>Letöltés választott formátumban</h5>
+        <button type="button">JPG</button>
+        <button type="button">PNG</button>
+        <button type="button">BMP</button>
+        <button type="button">GIF</button>
+      </div>
+
     </div>
 </template>
 
@@ -33,7 +46,7 @@
                 avatar: '',
                 dropzoneOptions: {
                     url: '/image',
-                    dictDefaultMessage: "<i class='fa fa-cloud-upload'></i>„Kattints ide a feltöltendő kép/képek kiválasztásához,<br> vagy egyszerűen húzd ide a képeket.”",
+                    dictDefaultMessage: "„Kattints ide a feltöltendő kép/képek kiválasztásához,<br> vagy egyszerűen húzd ide a képeket.”<br><i class=\"fa fa-cloud-upload\"></i>",
                     thumbnailWidth: 150,
                     maxFile: 1,
                     // headers: {"My-Awesome-Header": "header value"},
