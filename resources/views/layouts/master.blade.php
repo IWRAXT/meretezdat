@@ -14,6 +14,8 @@
     {{--Syles--}}
     <link rel="stylesheet" href="{{asset("css/app.css")}}">
     <link rel="stylesheet" href="{{asset("css/photo.css")}}">
+    {{--<link  href="/path/to/cropper.css" rel="stylesheet">--}}
+
     {{--    <link href="{{ asset('../css/bootstrap.min.css') }}" rel="stylesheet">--}}
     {{--Dropzone--}}
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css">--}}
@@ -27,14 +29,13 @@
     </div>
 @endif
 <div class="container flex-center">
-    <div class="row">
         @yield('content')
-    </div>
 </div>
 
 @include('layouts.footer')
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 {{--<script src="{{asset('../js/app.js')}}"></script>--}}
 {{--<script src="{{ asset('../js/bootstrap.min.js') }}"></script>--}}

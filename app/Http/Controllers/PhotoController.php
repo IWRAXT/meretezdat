@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Photo;
 use Illuminate\Http\Request;
-use Intervention\Image\ImageManagerStatic as Image;
 
 class PhotoController extends Controller
 {
@@ -20,9 +19,9 @@ class PhotoController extends Controller
             $photo->name=$request->file('file')->getClientOriginalName();
 
             $path = $request->file('file')->storeAs('public/images', $photo->name);
-            Image::make(storage_path('app/'.$path))
-                ->resize(100, 100)
-                ->save();
+//            Image::make(storage_path('app/'.$path))
+//                ->resize(100, 100)
+//                ->save();
 
 
             //  $img = Image::make($path)->resize(100, 100)->save();
@@ -37,10 +36,10 @@ class PhotoController extends Controller
 
             //$url=Storage::url('ponty.jpg');
             //dd($img);
-
+            $name = $request->file('file')->getClientOriginalName();
             $photo->save();
-            return redirect('/');
-//            return response('ok',200);
+//           return response('ok',200)->json([$name]);
+            return response($name);
         } else {
             return redirect('/')->with('success','Nincs file kiválasztva');
         }
