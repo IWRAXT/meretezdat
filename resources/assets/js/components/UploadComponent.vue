@@ -1,8 +1,5 @@
 <template>
 
-    <!--Bootstrap Collapse-->
-
-
     <div>
         <div class="container" v-show="avatar==false">
 
@@ -13,7 +10,6 @@
             </div>
 
             <vue-dropzone ref="Dropzone"
-
                           id="dropzone"
                           :options="dropzoneOptions"
                           @vdropzone-success="afterComplete">
@@ -22,60 +18,82 @@
         </div>
 
         <div class="container" v-show="avatar">
-            <!--<img :src="img_src" class="img-responsive">-->
-            <div style="width: 400px; height:300px;  display: inline-block;">
-                <vue-cropper
-                        ref="cropper"
-                        :src="img_src"
-                        alt="Source Image"
-                        :cropmove="cropImage"
-                        :rotatable="true"
-                        drag-mode="crop">
-                </vue-cropper>
-                <!--:guides="true"-->
-                <!--:view-mode="2"-->
-                <!--drag-mode="crop"-->
-                <!--:auto-crop-area="0.5"-->
-                <!--:min-container-width="250"-->
-                <!--:min-container-height="180"-->
-                <!--:background="true"-->
 
-                <img :src="cropImg" style="width: 200px; height: 150px;" alt="Cropped Image"/>
-                <label class="radio-inline"><input type="radio" name="optradio">Méretarány megtartásával</label>
+            <table class="table-responsive">
+                <thead>
+                <tr>
+                    <th>Eredeti</th>
+                    <th>Szerkesztett</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><img :src="img_src"
+                             alt="Cropped Image"/></td>
+                    <td><img :src="cropImg"
+                             alt="Cropped Image"/></td>
+                </tr>
+                </tbody>
+            </table>
 
+            <button class="collapsible"><i class="material-icons">collections</i>Kép szerkesztés</button>
+            <div class="content">
+                <div class="col-sm-10">
+                    <vue-cropper
+                            ref="cropper"
+                            :src="img_src"
+                            alt="Source Image"
+                            :cropmove="cropImage"
+                            :rotatable="true"
+                            drag-mode="crop">
+                    </vue-cropper>
+                </div>
+                <div class="col-sm-2">
+                    <button type="button" class="btn btn-info btn-sm" @click="rotate">Forgatás</button>
+                    <br><br>
+                    <button type="button" class="btn btn-info btn-sm" @click="scaleX">Tükrözés<br>y-tengelyre</button>
+                    <br><br>
+                    <button type="button" class="btn btn-info btn-sm" @click="scaleY">Tükrözés<br>x-tengelyre</button>
+                    <br><br>
+                    <button type="button" class="btn btn-info btn-sm" @click="cropImage">OK</button>
+                </div>
             </div>
 
-            <p><i class="material-icons">collections</i>Kép szerkesztés</p><br><br>
-            <div class="d-flex justify-content-around  mb-3">
-                <button type="button" class="btn btn-info btn-sm" @click="cropImage">Kivágás</button>
+            <button class="collapsible"><i class="material-icons">collections</i>Kép átméretezés</button>
+            <div class="content">
+                <div class="d-flex justify-content-around  mb-3" style="padding-top: 6px">
+                    <button type="button" class="btn btn-info btn-sm">25%</button>
+                    <button type="button" class="btn btn-info btn-sm">50%</button>
+                    <button type="button" class="btn btn-info btn-sm">75%</button>
+                </div>
+                <button type="button" class="btn btn-info btn-sm">Egyéni:</button>
+                <input type="text">
+                <label class="radio-inline"><input type="radio" name="optradio" style="padding-bottom: 6px">Méretarány
+                    megtartásával</label>
+            </div>
 
+            <button class="collapsible"><i class="material-icons">collections</i>Válassz speciális réteget</button>
+            <div class="content">
+                <div class="d-flex justify-content-around  mb-3" style="padding-top: 6px">
+                    <button type="button" class="btn btn-info btn-sm">Szürke</button>
+                    <button type="button" class="btn btn-info btn-sm">Szépia</button>
+                    <button type="button" class="btn btn-info btn-sm">Olajfesték</button>
+                </div>
+            </div>
 
-                <button type="button" class="btn btn-info btn-sm" @click="rotate">Forgatás</button>
-                <button type="button" class="btn btn-info btn-sm">Tükrözés</button>
+            <button class="collapsible"><i class="material-icons">collections</i>Letöltés választott formátumban
+            </button>
+            <div class="content">
+                <div class="d-flex justify-content-around  mb-4" style="padding-top: 6px">
+                    <button type="button" class="btn btn-info btn-sm">JPG</button>
+                    <!--v-on="jpg"-->
+                    <button type="button" class="btn btn-info btn-sm">PNG</button>
+                    <button type="button" class="btn btn-info btn-sm">BMP</button>
+                    <button type="button" class="btn btn-info btn-sm">GIF</button>
+                </div>
             </div>
-            <p><i class="material-icons">collections</i>Kép átméretezés</p><br><br>
-            <div class="d-flex justify-content-around  mb-4">
-                <button type="button" class="btn btn-info btn-sm">25%</button>
-                <button type="button" class="btn btn-info btn-sm">50%</button>
-                <button type="button" class="btn btn-info btn-sm">75%</button>
-                <button type="button" class="btn btn-info btn-sm">Egyéni</button>
-            </div>
-            <p><i class="material-icons">collections</i>Válassz speciális réteget</p><br><br>
-            <div class="d-flex justify-content-around  mb-3">
-                <button type="button" class="btn btn-info btn-sm">Szürke</button>
-                <button type="button" class="btn btn-info btn-sm">Szépia</button>
-                <button type="button" class="btn btn-info btn-sm">Olajfesték</button>
-            </div>
-            <p><i class="material-icons">collections</i>Letöltés választott formátumban</p><br><br>
-            <div class="d-flex justify-content-around  mb-4">
-                <button type="button" class="btn btn-info btn-sm">JPG</button>
-                <!--v-on="jpg"-->
-                <button type="button" class="btn btn-info btn-sm">PNG</button>
-                <button type="button" class="btn btn-info btn-sm">BMP</button>
-                <button type="button" class="btn btn-info btn-sm">GIF</button>
-            </div>
+
         </div>
-
 
     </div>
 
@@ -96,10 +114,13 @@
                 avatar: false,
                 img_src: '',
                 crop_img: '',
-                cropImg: '',
+                cropImg: 'default-image.png',
                 dropzoneOptions: {
                     url: '/image',
-                    dictDefaultMessage: "„Kattints ide a feltöltendő kép/képek kiválasztásához,<br> vagy egyszerűen húzd ide a képeket.”<br><i class=\"fa fa-cloud-upload\"></i>",
+                    dictDefaultMessage: "„Kattints ide a feltöltendő kép/képek kiválasztásához," +
+                    "<br> vagy egyszerűen húzd ide a képeket.”<br><br>" +
+                    "<i class=\"fa fa-cloud-upload\"" +
+                    "style=\"font-size:36px\"></i>",
                     thumbnailWidth: 150,
                     maxFile: 1,
                     headers: {
@@ -124,6 +145,12 @@
             rotate() {
                 // guess what this does :)
                 this.$refs.cropper.rotate(90);
+            },
+            scaleX() {
+                this.$refs.cropper.scaleX(-1);
+            },
+            scaleY() {
+                this.$refs.cropper.scaleY(-1);
             },
 
             // jpg(){
@@ -158,24 +185,88 @@
             // }
         },
     };
+
+
 </script>
 <style scoped>
 
     img {
-        height: 200px;
+        height: 300px;
         width: auto;
-        padding-bottom: 12px;
+
     }
 
     button {
         font-weight: bold;
         color: white;
+        font-size: 16px;
 
     }
 
-    p {
-        float: left;
+    .material-icons {
+        font-size: small;
+    }
 
+    vue-dropzone {
+        padding-top: 12px;
+        height: 300px;
+        width: auto;
+
+    }
+
+    .collapsible {
+        background-color: #777;
+        color: white;
+        cursor: pointer;
+        padding: 6px;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 16px;
+        width: 100%;
+    }
+
+    .active, .collapsible:hover {
+        background-color: #555;
+    }
+
+    .collapsible:after {
+        content: '\002B';
+        color: white;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+    }
+
+    .active:after {
+        content: "\2212";
+    }
+
+    .content {
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        background-color: #f1f1f1;
+
+    }
+
+    tr {
+        horiz-align: center;
+    }
+
+    thead {
+        background-color: #777;
+        color: white;
+        font-size: 16px;
+        horiz-align: center;
+    }
+
+    table {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
     }
 
 
