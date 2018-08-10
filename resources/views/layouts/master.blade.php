@@ -31,7 +31,7 @@
         {{session('success')}}
     </div>
 @endif
-<div class="col-md-12 flex-center">
+<div class="container-fluid flex-center position-ref">
         @yield('content')
 </div>
 

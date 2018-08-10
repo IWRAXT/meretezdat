@@ -16,7 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+
 Route::post('/image', 'PhotoController@uploadImage');
+Route::post('/image/25', 'PhotoController@huszonot');
 
 Route::get('/', function () {
 
@@ -24,6 +26,4 @@ Route::get('/', function () {
 });
 
 
-
-//Route::post('/','PhotoController@upload');
 

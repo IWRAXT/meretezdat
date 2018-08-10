@@ -36,43 +36,45 @@
                 </tbody>
             </table>
 
-            <button class="collapsible"><i class="material-icons">collections</i>Kép szerkesztés</button>
+            <button class="collapsible"><i class="material-icons">collections</i> Kép szerkesztés</button>
             <div class="content">
-                <div class="col-sm-10">
+                <div class="col-sm-10" style="padding-top: 6px; padding-bottom: 6px">
                     <vue-cropper
                             ref="cropper"
                             :src="img_src"
                             alt="Source Image"
                             :cropmove="cropImage"
                             :rotatable="true"
+                            :img-style="{ 'width': '200px', 'height': '200px' }"
                             drag-mode="crop">
                     </vue-cropper>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2" style="padding-top: 6px; padding-bottom: 6px">
                     <button type="button" class="btn btn-info btn-sm" @click="rotate">Forgatás</button>
                     <br><br>
                     <button type="button" class="btn btn-info btn-sm" @click="scaleX">Tükrözés<br>y-tengelyre</button>
                     <br><br>
                     <button type="button" class="btn btn-info btn-sm" @click="scaleY">Tükrözés<br>x-tengelyre</button>
                     <br><br>
-                    <button type="button" class="btn btn-info btn-sm" @click="cropImage">OK</button>
+                    <button type="button" class="btn btn-secondary btn-sm" @click="cropImage">Szerkesztés<br>kész
+                    </button>
                 </div>
             </div>
 
-            <button class="collapsible"><i class="material-icons">collections</i>Kép átméretezés</button>
+            <button class="collapsible"><i class="material-icons">collections</i> Kép átméretezés</button>
             <div class="content">
                 <div class="d-flex justify-content-around  mb-3" style="padding-top: 6px">
-                    <button type="button" class="btn btn-info btn-sm">25%</button>
+                    <button type="button" class="btn btn-info btn-sm" ref="huszon" @click="huszonot">25%</button>
                     <button type="button" class="btn btn-info btn-sm">50%</button>
                     <button type="button" class="btn btn-info btn-sm">75%</button>
                 </div>
-                <button type="button" class="btn btn-info btn-sm">Egyéni:</button>
+                <button type="button" class="btn btn-info btn-sm" style="margin-bottom: 12px">Egyéni:</button>
                 <input type="text">
-                <label class="radio-inline"><input type="radio" name="optradio" style="padding-bottom: 6px">Méretarány
+                <label class="radio-inline"><input type="radio" name="optradio">Méretarány
                     megtartásával</label>
             </div>
 
-            <button class="collapsible"><i class="material-icons">collections</i>Válassz speciális réteget</button>
+            <button class="collapsible"><i class="material-icons">collections</i> Válassz speciális réteget</button>
             <div class="content">
                 <div class="d-flex justify-content-around  mb-3" style="padding-top: 6px">
                     <button type="button" class="btn btn-info btn-sm">Szürke</button>
@@ -81,12 +83,11 @@
                 </div>
             </div>
 
-            <button class="collapsible"><i class="material-icons">collections</i>Letöltés választott formátumban
+            <button class="collapsible"><i class="material-icons">collections</i> Letöltés választott formátumban
             </button>
             <div class="content">
                 <div class="d-flex justify-content-around  mb-4" style="padding-top: 6px">
-                    <button type="button" class="btn btn-info btn-sm">JPG</button>
-                    <!--v-on="jpg"-->
+                    <button type="button" class="btn btn-info btn-sm" @click="jpg">JPG</button>
                     <button type="button" class="btn btn-info btn-sm">PNG</button>
                     <button type="button" class="btn btn-info btn-sm">BMP</button>
                     <button type="button" class="btn btn-info btn-sm">GIF</button>
@@ -113,7 +114,6 @@
             return {
                 avatar: false,
                 img_src: '',
-                crop_img: '',
                 cropImg: 'default-image.png',
                 dropzoneOptions: {
                     url: '/image',
@@ -121,12 +121,13 @@
                     "<br> vagy egyszerűen húzd ide a képeket.”<br><br>" +
                     "<i class=\"fa fa-cloud-upload\"" +
                     "style=\"font-size:36px\"></i>",
+                    dictMaxFilesExceeded: 'Csak (max: {{maxFiles}}) file-t lehet feltölteni',
                     thumbnailWidth: 150,
-                    maxFile: 1,
+                    uploadMultiple: false,
+                    maxFiles: 1,
                     headers: {
                         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                     }
-                    // addRemoveLinks: true,
                 }
             };
 
@@ -139,11 +140,9 @@
                 this.$refs.cropper.replace(this.img_src);
             },
             cropImage() {
-                // get image data for post processing, e.g. upload or setting image src
                 this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
             },
             rotate() {
-                // guess what this does :)
                 this.$refs.cropper.rotate(90);
             },
             scaleX() {
@@ -152,10 +151,34 @@
             scaleY() {
                 this.$refs.cropper.scaleY(-1);
             },
+            huszonot() {
 
-            // jpg(){
-            //     $img = Image::make(public_path('/storage/images'.(this.img_path)));
-            // }
+                if (this.cropImg !== 'default-image.png') {
+                    let formData = new FormData();
+                    formData.append('file', this.$refs.cropper.getCroppedCanvas().toDataURL());
+
+                    axios.post('/image/25', formData,
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                                // boundary=${formData._boundary}`,
+                                // 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryyrV7KO0BoCBuDbTL'
+
+                            }
+                        }
+                    ).then(function () {
+                        console.log('SUCCESS!!');
+                    }).catch(function () {
+                        console.log('FAILURE!!');
+                    });
+                } else {
+                }
+
+            },
+            jpg() {
+
+            }
+
 
             // submitFile() {
             //     let formData = new FormData();
@@ -191,15 +214,18 @@
 <style scoped>
 
     img {
-        height: 300px;
-        width: auto;
+
+        max-height: 300px;
+
+        max-width: 400px;
 
     }
 
     button {
         font-weight: bold;
         color: white;
-        font-size: 16px;
+        font-size: 14px;
+        border-radius: 6px;
 
     }
 
@@ -224,6 +250,8 @@
         outline: none;
         font-size: 16px;
         width: 100%;
+        border-radius: 3px;
+        opacity: 0.7;
     }
 
     .active, .collapsible:hover {
@@ -257,16 +285,22 @@
 
     thead {
         background-color: #777;
+        opacity: 0.7;
         color: white;
         font-size: 16px;
         horiz-align: center;
+    }
+
+    td {
+        width: 600px;
     }
 
     table {
         display: block;
         margin-left: auto;
         margin-right: auto;
-        width: 100%;
+        border-radius: 3px;
+
     }
 
 

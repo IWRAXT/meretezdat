@@ -11555,7 +11555,8 @@ module.exports = defaults;
         }
 
 
-        /***/ }),
+        /***/
+    }),
 /* 5 */
 /***/ (function(module, exports) {
 
@@ -47843,7 +47844,7 @@ if(false) {
 
 
 // module
-        exports.push([module.i, "\nimg[data-v-4e19f7d5] {\n    height: 300px;\n    width: auto;\n}\nbutton[data-v-4e19f7d5] {\n    font-weight: bold;\n    color: white;\n    font-size: 16px;\n}\n.material-icons[data-v-4e19f7d5] {\n    font-size: small;\n}\nvue-dropzone[data-v-4e19f7d5] {\n    padding-top: 12px;\n    height: 300px;\n    width: auto;\n}\n.collapsible[data-v-4e19f7d5] {\n    background-color: #777;\n    color: white;\n    cursor: pointer;\n    padding: 6px;\n    border: none;\n    text-align: left;\n    outline: none;\n    font-size: 16px;\n    width: 100%;\n}\n.active[data-v-4e19f7d5], .collapsible[data-v-4e19f7d5]:hover {\n    background-color: #555;\n}\n.collapsible[data-v-4e19f7d5]:after {\n    content: '+';\n    color: white;\n    font-weight: bold;\n    float: right;\n    margin-left: 5px;\n}\n.active[data-v-4e19f7d5]:after {\n    content: \"\\2212\";\n}\n.content[data-v-4e19f7d5] {\n    padding: 0 ;\n    max-height: 0;\n    overflow: hidden;\n    -webkit-transition: max-height 0.2s ease-out;\n    transition: max-height 0.2s ease-out;\n    background-color: #f1f1f1;\n}\ntr[data-v-4e19f7d5] {\n    horiz-align: center;\n}\nthead[data-v-4e19f7d5]\n{\n    background-color: #777;\n    color: white;\n    font-size: 16px;\n    horiz-align: center;\n}\ntable[data-v-4e19f7d5]{\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    width: 100%;\n}\n\n\n", ""]);
+        exports.push([module.i, "\nimg[data-v-4e19f7d5] {\n\n    max-height: 300px;\n\n    max-width:400px;\n}\nbutton[data-v-4e19f7d5] {\n    font-weight: bold;\n    color: white;\n    font-size: 14px;\n    border-radius: 6px;\n}\n.material-icons[data-v-4e19f7d5] {\n    font-size: small;\n}\nvue-dropzone[data-v-4e19f7d5] {\n    padding-top: 12px;\n    height: 300px;\n    width: auto;\n}\n.collapsible[data-v-4e19f7d5] {\n    background-color: #777;\n    color: white;\n    cursor: pointer;\n    padding: 6px ;\n    border: none;\n    text-align: left;\n    outline: none;\n    font-size: 16px;\n    width: 100%;\n    border-radius: 3px;\n    opacity: 0.7;\n}\n.active[data-v-4e19f7d5], .collapsible[data-v-4e19f7d5]:hover {\n    background-color: #555;\n}\n.collapsible[data-v-4e19f7d5]:after {\n    content: '+';\n    color: white;\n    font-weight: bold;\n    float: right;\n    margin-left: 5px;\n}\n.active[data-v-4e19f7d5]:after {\n    content: \"\\2212\";\n}\n.content[data-v-4e19f7d5] {\n    padding: 0;\n    max-height: 0;\n    overflow: hidden;\n    -webkit-transition: max-height 0.2s ease-out;\n    transition: max-height 0.2s ease-out;\n    background-color: #f1f1f1;\n}\ntr[data-v-4e19f7d5] {\n    horiz-align: center;\n}\nthead[data-v-4e19f7d5] {\n    background-color: #777;\n    opacity: 0.7;\n    color: white;\n    font-size: 16px;\n    horiz-align: center;\n}\ntd[data-v-4e19f7d5]{\n    width: 600px;\n}\ntable[data-v-4e19f7d5] {\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border-radius: 3px;\n}\n\n\n\n", ""]);
 
 // exports
 
@@ -48224,7 +48225,8 @@ module.exports = function listToStyles (parentId, list) {
         }
 
 
-        /***/ }),
+        /***/
+    }),
 /* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -48235,6 +48237,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         /* harmony import */
         var __WEBPACK_IMPORTED_MODULE_1_vue_cropperjs__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_cropperjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_cropperjs__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -48344,17 +48353,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             avatar: false,
             img_src: '',
-            crop_img: '',
             cropImg: 'default-image.png',
             dropzoneOptions: {
                 url: '/image',
                 dictDefaultMessage: "„Kattints ide a feltöltendő kép/képek kiválasztásához," + "<br> vagy egyszerűen húzd ide a képeket.”<br><br>" + "<i class=\"fa fa-cloud-upload\"" + "style=\"font-size:36px\"></i>",
+                dictMaxFilesExceeded: 'Csak (max: {{maxFiles}}) file-t lehet feltölteni',
                 thumbnailWidth: 150,
-                maxFile: 1,
+                uploadMultiple: false,
+                maxFiles: 1,
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
-                    // addRemoveLinks: true,
-                } }
+                }
+            }
         };
     },
 
@@ -48366,11 +48376,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$refs.cropper.replace(this.img_src);
         },
         cropImage: function cropImage() {
-            // get image data for post processing, e.g. upload or setting image src
             this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
         },
         rotate: function rotate() {
-            // guess what this does :)
             this.$refs.cropper.rotate(90);
         },
         scaleX: function scaleX() {
@@ -48378,7 +48386,58 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         scaleY: function scaleY() {
             this.$refs.cropper.scaleY(-1);
+        },
+        huszonot: function huszonot() {
+
+            if (this.cropImg !== 'default-image.png') {
+                var formData = new FormData();
+                formData.append('file', this.$refs.cropper.getCroppedCanvas().toDataURL());
+
+                axios.post('/image/25', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                        // boundary=${formData._boundary}`,
+                        // 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryyrV7KO0BoCBuDbTL'
+
+                    }
+                }).then(function () {
+                    console.log('SUCCESS!!');
+                }).catch(function () {
+                    console.log('FAILURE!!');
+                });
+            } else {
+            }
+        },
+        jpg: function jpg() {
         }
+
+        // submitFile() {
+        //     let formData = new FormData();
+        //     formData.append('file', this.file);
+        //
+        //     axios.post('/image',
+        //         formData,
+        //         {
+        //             headers: {
+        //                 'Content-Type': 'multipart/form-data'
+        //             }
+        //         }
+        //     ).then(function () {
+        //         console.log('SUCCESS!!');
+        //     })
+        //         .catch(function () {
+        //             console.log('FAILURE!!');
+        //         });
+        // },
+        //
+        // handleFileUpload() {
+        //     this.file = this.$refs.file.files[0];
+        //     let reader = new FileReader();
+        //     reader.readAsDataURL(this.file);
+        //     reader.onload = event => {
+        //         this.avatar = event.target.result}
+        // }
+
     }
 });
 
@@ -52491,7 +52550,10 @@ var render = function() {
               _c("div", {staticClass: "content"}, [
                   _c(
                       "div",
-                      {staticClass: "col-sm-10"},
+                      {
+                          staticClass: "col-sm-10",
+                          staticStyle: {"padding-top": "6px", "padding-bottom": "6px"}
+                      },
                       [
                           _c("vue-cropper", {
                               ref: "cropper",
@@ -52500,6 +52562,7 @@ var render = function() {
                                   alt: "Source Image",
                                   cropmove: _vm.cropImage,
                                   rotatable: true,
+                                  "img-style": {width: "200px", height: "200px"},
                                   "drag-mode": "crop"
                               }
                           })
@@ -52507,58 +52570,124 @@ var render = function() {
                       1
                   ),
                   _vm._v(" "),
-                  _c("div", {staticClass: "col-sm-2"}, [
-                      _c(
-                          "button",
-                          {
-                              staticClass: "btn btn-info btn-sm",
-                              attrs: {type: "button"},
-                              on: {click: _vm.rotate}
-                          },
-                          [_vm._v("Forgatás")]
-                      ),
-                      _c("br"),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                          "button",
-                          {
-                              staticClass: "btn btn-info btn-sm",
-                              attrs: {type: "button"},
-                              on: {click: _vm.scaleX}
-                          },
-                          [_vm._v("Tükrözés"), _c("br"), _vm._v("y-tengelyre")]
-                      ),
-                      _c("br"),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                          "button",
-                          {
-                              staticClass: "btn btn-info btn-sm",
-                              attrs: {type: "button"},
-                              on: {click: _vm.scaleY}
-                          },
-                          [_vm._v("Tükrözés"), _c("br"), _vm._v("x-tengelyre")]
-                      ),
-                      _c("br"),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                          "button",
-                          {
-                              staticClass: "btn btn-info btn-sm",
-                              attrs: {type: "button"},
-                              on: {click: _vm.cropImage}
-                          },
-                          [_vm._v("OK")]
-                      )
-                  ])
+                  _c(
+                      "div",
+                      {
+                          staticClass: "col-sm-2",
+                          staticStyle: {"padding-top": "6px", "padding-bottom": "6px"}
+                      },
+                      [
+                          _c(
+                              "button",
+                              {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: {type: "button"},
+                                  on: {click: _vm.rotate}
+                              },
+                              [_vm._v("Forgatás")]
+                          ),
+                          _vm._v(" "),
+                          _c("br"),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c(
+                              "button",
+                              {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: {type: "button"},
+                                  on: {click: _vm.scaleX}
+                              },
+                              [_vm._v("Tükrözés"), _c("br"), _vm._v("y-tengelyre")]
+                          ),
+                          _vm._v(" "),
+                          _c("br"),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c(
+                              "button",
+                              {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: {type: "button"},
+                                  on: {click: _vm.scaleY}
+                              },
+                              [_vm._v("Tükrözés"), _c("br"), _vm._v("x-tengelyre")]
+                          ),
+                          _vm._v(" "),
+                          _c("br"),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c(
+                              "button",
+                              {
+                                  staticClass: "btn btn-secondary btn-sm",
+                                  attrs: {type: "button"},
+                                  on: {click: _vm.cropImage}
+                              },
+                              [
+                                  _vm._v("Szerkesztés"),
+                                  _c("br"),
+                                  _vm._v("kész\n                ")
+                              ]
+                          )
+                      ]
+                  )
               ]),
               _vm._v(" "),
               _vm._m(3),
               _vm._v(" "),
-              _vm._m(4),
+              _c("div", {staticClass: "content"}, [
+                  _c(
+                      "div",
+                      {
+                          staticClass: "d-flex justify-content-around  mb-3",
+                          staticStyle: {"padding-top": "6px"}
+                      },
+                      [
+                          _c(
+                              "button",
+                              {
+                                  ref: "huszon",
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: {type: "button"},
+                                  on: {click: _vm.huszonot}
+                              },
+                              [_vm._v("25%")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                              "button",
+                              {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: {type: "button"}
+                              },
+                              [_vm._v("50%")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                              "button",
+                              {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: {type: "button"}
+                              },
+                              [_vm._v("75%")]
+                          )
+                      ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                      "button",
+                      {
+                          staticClass: "btn btn-info btn-sm",
+                          staticStyle: {"margin-bottom": "12px"},
+                          attrs: {type: "button"}
+                      },
+                      [_vm._v("Egyéni:")]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {attrs: {type: "text"}}),
+                  _vm._v(" "),
+                  _vm._m(4)
+              ]),
               _vm._v(" "),
               _vm._m(5),
               _vm._v(" "),
@@ -52566,7 +52695,53 @@ var render = function() {
               _vm._v(" "),
               _vm._m(7),
               _vm._v(" "),
-              _vm._m(8)
+              _c("div", {staticClass: "content"}, [
+                  _c(
+                      "div",
+                      {
+                          staticClass: "d-flex justify-content-around  mb-4",
+                          staticStyle: {"padding-top": "6px"}
+                      },
+                      [
+                          _c(
+                              "button",
+                              {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: {type: "button"},
+                                  on: {click: _vm.jpg}
+                              },
+                              [_vm._v("JPG")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                              "button",
+                              {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: {type: "button"}
+                              },
+                              [_vm._v("PNG")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                              "button",
+                              {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: {type: "button"}
+                              },
+                              [_vm._v("BMP")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                              "button",
+                              {
+                                  staticClass: "btn btn-info btn-sm",
+                                  attrs: {type: "button"}
+                              },
+                              [_vm._v("GIF")]
+                          )
+                      ]
+                  )
+              ])
           ]
       )
   ])
@@ -52608,7 +52783,7 @@ var render = function() {
                 var _c = _vm._self._c || _h
                 return _c("button", {staticClass: "collapsible"}, [
                     _c("i", {staticClass: "material-icons"}, [_vm._v("collections")]),
-                    _vm._v("Kép szerkesztés")
+                    _vm._v(" Kép szerkesztés")
                 ])
             },
             function () {
@@ -52617,55 +52792,16 @@ var render = function() {
                 var _c = _vm._self._c || _h
                 return _c("button", {staticClass: "collapsible"}, [
                     _c("i", {staticClass: "material-icons"}, [_vm._v("collections")]),
-                    _vm._v("Kép átméretezés")
+                    _vm._v(" Kép átméretezés")
                 ])
             },
             function () {
                 var _vm = this
                 var _h = _vm.$createElement
                 var _c = _vm._self._c || _h
-                return _c("div", {staticClass: "content"}, [
-                    _c(
-                        "div",
-                        {
-                            staticClass: "d-flex justify-content-around  mb-3",
-                            staticStyle: {"padding-top": "6px"}
-                        },
-                        [
-                            _c(
-                                "button",
-                                {staticClass: "btn btn-info btn-sm", attrs: {type: "button"}},
-                                [_vm._v("25%")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                                "button",
-                                {staticClass: "btn btn-info btn-sm", attrs: {type: "button"}},
-                                [_vm._v("50%")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                                "button",
-                                {staticClass: "btn btn-info btn-sm", attrs: {type: "button"}},
-                                [_vm._v("75%")]
-                            )
-                        ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                        "button",
-                        {staticClass: "btn btn-info btn-sm", attrs: {type: "button"}},
-                        [_vm._v("Egyéni: ")]
-                    ),
-                    _c("input", {attrs: {type: "text"}}),
-                    _vm._v(" "),
-                    _c("label", {staticClass: "radio-inline"}, [
-                        _c("input", {
-                            staticStyle: {"padding-bottom": "6px"},
-                            attrs: {type: "radio", name: "optradio"}
-                        }),
-                        _vm._v("Méretarány megtartásával")
-                    ])
+                return _c("label", {staticClass: "radio-inline"}, [
+                    _c("input", {attrs: {type: "radio", name: "optradio"}}),
+                    _vm._v("Méretarány\n                megtartásával")
                 ])
             },
             function () {
@@ -52674,7 +52810,7 @@ var render = function() {
                 var _c = _vm._self._c || _h
                 return _c("button", {staticClass: "collapsible"}, [
                     _c("i", {staticClass: "material-icons"}, [_vm._v("collections")]),
-                    _vm._v("Válassz speciális réteget")
+                    _vm._v(" Válassz speciális réteget")
                 ])
             },
             function () {
@@ -52716,46 +52852,7 @@ var render = function() {
                 var _c = _vm._self._c || _h
                 return _c("button", {staticClass: "collapsible"}, [
                     _c("i", {staticClass: "material-icons"}, [_vm._v("collections")]),
-                    _vm._v("Letöltés választott formátumban")
-                ])
-            },
-            function () {
-                var _vm = this
-                var _h = _vm.$createElement
-                var _c = _vm._self._c || _h
-                return _c("div", {staticClass: "content"}, [
-                    _c(
-                        "div",
-                        {
-                            staticClass: "d-flex justify-content-around  mb-4",
-                            staticStyle: {"padding-top": "6px"}
-                        },
-                        [
-                            _c(
-                                "button",
-                                {staticClass: "btn btn-info btn-sm", attrs: {type: "button"}},
-                                [_vm._v("JPG")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                                "button",
-                                {staticClass: "btn btn-info btn-sm", attrs: {type: "button"}},
-                                [_vm._v("PNG")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                                "button",
-                                {staticClass: "btn btn-info btn-sm", attrs: {type: "button"}},
-                                [_vm._v("BMP")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                                "button",
-                                {staticClass: "btn btn-info btn-sm", attrs: {type: "button"}},
-                                [_vm._v("GIF")]
-                            )
-                        ]
-                    )
+                    _vm._v(" Letöltés választott formátumban\n        ")
                 ])
             }
         ]
