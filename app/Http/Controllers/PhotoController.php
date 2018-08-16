@@ -6,6 +6,7 @@ use App\Photo;
 use Illuminate\Http\Request;
 use Intervention\Image\ImageManagerStatic as Image;
 
+
 class PhotoController extends Controller
 {
 
@@ -17,9 +18,6 @@ class PhotoController extends Controller
             $photo->name = $request->file('file')->getClientOriginalName();
 
             $path = $request->file('file')->storeAs('public/images', $photo->name);
-//            Image::make(storage_path('app/'.$path))
-//                ->resize(100, 100)
-//                ->save();
 
             //  $img = Image::make($path)->resize(100, 100)->save();
             //return $request->foto->extension();   --Megadja a file kiterjesztését
@@ -30,7 +28,6 @@ class PhotoController extends Controller
 
             $name = $request->file('file')->getClientOriginalName();
             $photo->save();
-//           return response('ok',200)->json([$name]);
             return response($name);
         } else {
             return redirect('/')->with('success', 'Nincs file kiválasztva');
@@ -39,27 +36,86 @@ class PhotoController extends Controller
 
     public function huszonot(Request $request)
     {
+        if ($request->hasFile('file')) {
 
-        if ($request->input('file') !== null) {
-            dd($request->file('file'));
-            $filename = $request->file('file')
-                ->getClientOriginalName();
-
-            $img = Image::make(storage_path('app/public/images' .
-                $filename));
-            $size = $img->filesize();
-            $img->resize($size * 0.25, null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $img->save();
+            $filename = $request->file('file')->getClientOriginalName();
             $photo = Photo::where('name', $filename)->first();
-            $photo->move(public_path('images'), $filename);
+            $img = Image::make(file_get_contents(request()->file('file')));
+
+//            $img=Image::make( request()->file('file'));  //Ez simán nem működik
+
+            $width = $img->width();
+
+            $img->resize($width * 0.25, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save(storage_path('app/public/images/' . $filename));
+
+
             $photo->name = $filename;
-            return response('ok', 200)->json(['success' => 'Átméretezve']);
+            return response('ok', 200);
         } else {
             return response($request->all());
         }
     }
+
+    public function meretez(Request $request)
+    {
+        if ($request->hasFile('file')) {
+
+            $filename = $request->file('file')->getClientOriginalName();
+            $photo = Photo::where('name', $filename)->first();
+            $img = Image::make(file_get_contents(request()->file('file')));
+
+//            $img=Image::make( request()->file('file'));  //Ez simán nem működik
+
+            $width = $img->width();
+
+            $szam = ($request->meret) / 100;
+
+            $img->resize($width * $szam, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save(storage_path('app/public/images/' . $filename));
+
+
+            $photo->name = $filename;
+            return response('ok', 200);
+        } else {
+            return response($request->all());
+        }
+    }
+
+    public function jpg(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $filename = $request->file('file')->getClientOriginalName();
+            $photo = Photo::where('name', $filename)->first();
+            $img = Image::make(file_get_contents(request()->file('file')));
+
+            $dotPos = strpos($filename, ".");
+            $filename = substr($filename, 0, $dotPos);
+            $filename =
+                $img->save(storage_path('app/public/images/' . $filename . '.jpg'));
+
+            $photo->name = $filename . '.jpg';
+
+//            strlen()	Returns the length of a string
+//            strrchr()	Finds the last occurrence of a string inside another string
+//            The substr() function returns a part of a string.
+//
+
+            return response();
+//                ->download(storage_path('app/public/images'),$filename.'.jpg',[]);
+        } else {
+            return response($request->all());
+        }
+    }
+
+    public function download()
+    {
+        return Response::download(public_path('logo.jpg'));
+    }
+
+
 
 //    public function upload(Request $request)
 //    {
@@ -101,7 +157,8 @@ class PhotoController extends Controller
     }
 
 
-    public function destroy($id)
+    public
+    function destroy($id)
     {
         //
     }

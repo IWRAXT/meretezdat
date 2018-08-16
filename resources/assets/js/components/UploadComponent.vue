@@ -22,15 +22,15 @@
             <table class="table-responsive">
                 <thead>
                 <tr>
-                    <th>Eredeti</th>
                     <th>Szerkesztett</th>
+                    <th>Eredeti</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td><img :src="img_src"
-                             alt="Cropped Image"/></td>
                     <td><img :src="cropImg"
+                             alt="Cropped Image"/></td>
+                    <td><img :src="img_src"
                              alt="Cropped Image"/></td>
                 </tr>
                 </tbody>
@@ -64,12 +64,12 @@
             <button class="collapsible"><i class="material-icons">collections</i> Kép átméretezés</button>
             <div class="content">
                 <div class="d-flex justify-content-around  mb-3" style="padding-top: 6px">
-                    <button type="button" class="btn btn-info btn-sm" ref="huszon" @click="huszonot">25%</button>
-                    <button type="button" class="btn btn-info btn-sm">50%</button>
-                    <button type="button" class="btn btn-info btn-sm">75%</button>
+                    <button type="button" class="btn btn-info btn-sm" @click="meretez(25)">25%</button>
+                    <button type="button" class="btn btn-info btn-sm" @click="meretez(50)">50%</button>
+                    <button type="button" class="btn btn-info btn-sm" @click="meretez(75)">75%</button>
                 </div>
                 <button type="button" class="btn btn-info btn-sm" style="margin-bottom: 12px">Egyéni:</button>
-                <input type="text">
+                <!--<input :model="szam" $click="meretez($szam)" >-->
                 <label class="radio-inline"><input type="radio" name="optradio">Méretarány
                     megtartásával</label>
             </div>
@@ -91,6 +91,7 @@
                     <button type="button" class="btn btn-info btn-sm">PNG</button>
                     <button type="button" class="btn btn-info btn-sm">BMP</button>
                     <button type="button" class="btn btn-info btn-sm">GIF</button>
+                    <button type="button" class="btn btn-dark btn-sm" @click="download">Download</button>
                 </div>
             </div>
 
@@ -134,6 +135,7 @@
         },
 
         methods: {
+            //MaxFiles...alert()
             afterComplete(file, response) {
                 this.avatar = true;
                 this.img_src = '/storage/images/' + response;
@@ -151,33 +153,132 @@
             scaleY() {
                 this.$refs.cropper.scaleY(-1);
             },
-            huszonot() {
 
+            meretez($meret) {
                 if (this.cropImg !== 'default-image.png') {
-                    let formData = new FormData();
-                    formData.append('file', this.$refs.cropper.getCroppedCanvas().toDataURL());
+                    const formData = new FormData();
+                    console.log(this.img_src);
+                    formData.append('file', (new Blob([this.$refs.cropper.getCroppedCanvas().toDataURL()])), this.img_src);
+                    formData.append('meret', $meret);
 
+                    axios.post('/image/meretez', formData,
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            }
+                        }
+                    ).then(function () {
+                        alert("Sikeresen átméretezte!");
+                    }).catch(function () {
+                        alert("Nem sikerült átméretezni!");
+                    });
+                } else {
+                    const formData = new FormData();
+                    formData.append('file', (new Blob([this.img_src])));
+                    axios.post('/image/meretez', formData,
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            }
+                        }
+                    ).then(function () {
+                        alert("Sikeresen átméretezte!");
+                    }).catch(function () {
+                        alert("Nem sikerült átméretezni!");
+                    });
+                }
+
+            },
+            huszonot() {
+                // ToDo: meretez címre elküldeni a %os értéket, 1 controller és 1 fg
+                if (this.cropImg !== 'default-image.png') {
+                    const formData = new FormData();
+                    console.log(this.img_src);
+                    formData.append('file', (new Blob([this.$refs.cropper.getCroppedCanvas().toDataURL()])), this.img_src);
                     axios.post('/image/25', formData,
                         {
                             headers: {
                                 'Content-Type': 'multipart/form-data',
-                                // boundary=${formData._boundary}`,
-                                // 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundaryyrV7KO0BoCBuDbTL'
-
                             }
                         }
                     ).then(function () {
-                        console.log('SUCCESS!!');
+                        alert("Sikeresen átméretezte!");
                     }).catch(function () {
-                        console.log('FAILURE!!');
+                        alert("Nem sikerült átméretezni!");
                     });
                 } else {
+                    const formData = new FormData();
+                    formData.append('file', (new Blob([this.img_src])));
+                    axios.post('/image/25', formData,
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            }
+                        }
+                    ).then(function () {
+                        alert("Sikeresen átméretezte!");
+                    }).catch(function () {
+                        alert("Nem sikerült átméretezni!");
+                    });
                 }
 
             },
+            otven() {
+                alert("Még meg kell írni..");
+            },
+            hetvenot() {
+                alert("Még meg kell írni..");
+            },
             jpg() {
+                if (this.cropImg !== 'default-image.png') {
+                    const formData = new FormData();
+                    console.log(this.img_src);
+                    formData.append('file', (new Blob([this.$refs.cropper.getCroppedCanvas().toDataURL()])), this.img_src);
+                    axios.post('/image/JPG', formData,
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            }
+                        }
+                    ).then
+                    // (function(){
+                    ((response) => {
+                        console.log(response)
 
-            }
+                        let blob = new Blob([response.data], {type: 'application/json'}),
+                            url = window.URL.createObjectURL(blob)
+
+                        window.open(url);
+                        alert("Sikeresen mentette jpg formátumba!");
+                    }).catch(function () {
+                        alert("Nem sikerült menteni más formátumba!");
+                    });
+                } else {
+                    const formData = new FormData();
+                    formData.append('file', (new Blob([this.img_src])));
+                    axios.post('/image/JPG', formData,
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            }
+                        }
+                    ).then(function () {
+                        alert("Sikeresen mentette jpg formátumba!");
+
+                    }).catch(function () {
+                        alert("Nem sikerült menteni más formátumba");
+                    });
+                }
+            },
+            download() {
+                axios.get('/images/download')
+                    .then(function () {
+                        alert("Sikeresen mentette jpg formátumba!");
+
+                    }).catch(function () {
+                    alert("Nem sikerült menteni más formátumba");
+                });
+            },
 
 
             // submitFile() {
