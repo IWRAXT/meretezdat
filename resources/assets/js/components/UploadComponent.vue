@@ -68,8 +68,11 @@
                     <button type="button" class="btn btn-info btn-sm" @click="meretez(50)">50%</button>
                     <button type="button" class="btn btn-info btn-sm" @click="meretez(75)">75%</button>
                 </div>
-                <button type="button" class="btn btn-info btn-sm" style="margin-bottom: 12px">Egyéni:</button>
-                <!--<input :model="szam" $click="meretez($szam)" >-->
+                <button type="button" class="btn btn-info btn-sm" style="margin-bottom: 12px" @click="meretez(szam)">
+                    Egyéni:
+                </button>
+                <!--<input :model="szama" >-->
+                <!--<p>{{szama}}</p>-->
                 <label class="radio-inline"><input type="radio" name="optradio">Méretarány
                     megtartásával</label>
             </div>
@@ -114,6 +117,7 @@
         data() {
             return {
                 avatar: false,
+                szam: '100',
                 img_src: '',
                 cropImg: 'default-image.png',
                 dropzoneOptions: {
@@ -189,67 +193,29 @@
                 }
 
             },
-            huszonot() {
-                // ToDo: meretez címre elküldeni a %os értéket, 1 controller és 1 fg
-                if (this.cropImg !== 'default-image.png') {
-                    const formData = new FormData();
-                    console.log(this.img_src);
-                    formData.append('file', (new Blob([this.$refs.cropper.getCroppedCanvas().toDataURL()])), this.img_src);
-                    axios.post('/image/25', formData,
-                        {
-                            headers: {
-                                'Content-Type': 'multipart/form-data',
-                            }
-                        }
-                    ).then(function () {
-                        alert("Sikeresen átméretezte!");
-                    }).catch(function () {
-                        alert("Nem sikerült átméretezni!");
-                    });
-                } else {
-                    const formData = new FormData();
-                    formData.append('file', (new Blob([this.img_src])));
-                    axios.post('/image/25', formData,
-                        {
-                            headers: {
-                                'Content-Type': 'multipart/form-data',
-                            }
-                        }
-                    ).then(function () {
-                        alert("Sikeresen átméretezte!");
-                    }).catch(function () {
-                        alert("Nem sikerült átméretezni!");
-                    });
-                }
 
-            },
-            otven() {
-                alert("Még meg kell írni..");
-            },
-            hetvenot() {
-                alert("Még meg kell írni..");
-            },
+
             jpg() {
                 if (this.cropImg !== 'default-image.png') {
                     const formData = new FormData();
                     console.log(this.img_src);
-                    formData.append('file', (new Blob([this.$refs.cropper.getCroppedCanvas().toDataURL()])), this.img_src);
+                    formData.append('file', (new Blob([this.cropImg])), this.img_src);
                     axios.post('/image/JPG', formData,
                         {
                             headers: {
                                 'Content-Type': 'multipart/form-data',
-                            }
+
+                            },
+                            responseType: 'arraybuffer' //ha ez nincs ismeretlen formátumba ment
                         }
-                    ).then
-                    // (function(){
-                    ((response) => {
-                        console.log(response)
+                    ).then((response) => {
 
-                        let blob = new Blob([response.data], {type: 'application/json'}),
-                            url = window.URL.createObjectURL(blob)
+                        let blob = new Blob([response.data], {type: 'application/jpg'})
+                        let link = document.createElement('a')
+                        link.href = window.URL.createObjectURL(blob)
+                        link.download = 'pelda.jpg'
+                        link.click()
 
-                        window.open(url);
-                        alert("Sikeresen mentette jpg formátumba!");
                     }).catch(function () {
                         alert("Nem sikerült menteni más formátumba!");
                     });
@@ -260,24 +226,70 @@
                         {
                             headers: {
                                 'Content-Type': 'multipart/form-data',
-                            }
+
+                            },
+                            responseType: 'arraybuffer' //ha ez nincs ismeretlen formátumba ment
                         }
-                    ).then(function () {
-                        alert("Sikeresen mentette jpg formátumba!");
+                    ).then((response) => {
+
+                        let blob = new Blob([response.data], {type: 'application/jpg'})
+                        let link = document.createElement('a')
+                        link.href = window.URL.createObjectURL(blob)
+                        link.download = 'pelda.jpg'
+                        link.click()
 
                     }).catch(function () {
-                        alert("Nem sikerült menteni más formátumba");
+                        alert("Nem sikerült menteni más formátumba!");
                     });
                 }
             },
-            download() {
-                axios.get('/images/download')
-                    .then(function () {
-                        alert("Sikeresen mentette jpg formátumba!");
+            png() {
+                if (this.cropImg !== 'default-image.png') {
+                    const formData = new FormData();
+                    console.log(this.img_src);
+                    formData.append('file', (new Blob([this.cropImg])), this.img_src);
+                    axios.post('/image/PNG', formData,
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+
+                            },
+                            responseType: 'arraybuffer' //ha ez nincs ismeretlen formátumba ment
+                        }
+                    ).then((response) => {
+
+                        let blob = new Blob([response.data], {type: 'application/png'})
+                        let link = document.createElement('a')
+                        link.href = window.URL.createObjectURL(blob)
+                        link.download = 'pelda.png'
+                        link.click()
 
                     }).catch(function () {
-                    alert("Nem sikerült menteni más formátumba");
-                });
+                        alert("Nem sikerült menteni más formátumba!");
+                    });
+                } else {
+                    const formData = new FormData();
+                    formData.append('file', (new Blob([this.img_src])));
+                    axios.post('/image/PNG', formData,
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+
+                            },
+                            responseType: 'arraybuffer' //ha ez nincs ismeretlen formátumba ment
+                        }
+                    ).then((response) => {
+
+                        let blob = new Blob([response.data], {type: 'application/png'})
+                        let link = document.createElement('a')
+                        link.href = window.URL.createObjectURL(blob)
+                        link.download = 'pelda.png'
+                        link.click()
+
+                    }).catch(function () {
+                        alert("Nem sikerült menteni más formátumba!");
+                    });
+                }
             },
 
 

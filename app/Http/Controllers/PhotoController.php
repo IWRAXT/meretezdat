@@ -69,7 +69,7 @@ class PhotoController extends Controller
 //            $img=Image::make( request()->file('file'));  //Ez simán nem működik
 
             $width = $img->width();
-
+            dd($request->meret);
             $szam = ($request->meret) / 100;
 
             $img->resize($width * $szam, null, function ($constraint) {
@@ -86,6 +86,7 @@ class PhotoController extends Controller
 
     public function jpg(Request $request)
     {
+
         if ($request->hasFile('file')) {
             $filename = $request->file('file')->getClientOriginalName();
             $photo = Photo::where('name', $filename)->first();
@@ -93,8 +94,8 @@ class PhotoController extends Controller
 
             $dotPos = strpos($filename, ".");
             $filename = substr($filename, 0, $dotPos);
-            $filename =
-                $img->save(storage_path('app/public/images/' . $filename . '.jpg'));
+
+            $img->save(storage_path('app/public/images/' . $filename . '.jpg'));
 
             $photo->name = $filename . '.jpg';
 
@@ -103,16 +104,35 @@ class PhotoController extends Controller
 //            The substr() function returns a part of a string.
 //
 
-            return response();
-//                ->download(storage_path('app/public/images'),$filename.'.jpg',[]);
+
+            return response()->download(storage_path('app/public/images/' . $filename . '.jpg'), $filename . '.jpg', ["Content-Description: File Transfer",
+                ("Content-Transfer-Encoding: Binary")]);
         } else {
             return response($request->all());
         }
     }
 
-    public function download()
+    public function png(Request $request)
     {
-        return Response::download(public_path('logo.jpg'));
+
+        if ($request->hasFile('file')) {
+            $filename = $request->file('file')->getClientOriginalName();
+            $photo = Photo::where('name', $filename)->first();
+            $img = Image::make(file_get_contents(request()->file('file')));
+
+            $dotPos = strpos($filename, ".");
+            $filename = substr($filename, 0, $dotPos);
+
+            $img->save(storage_path('app/public/images/' . $filename . '.png'));
+
+            $photo->name = $filename . '.png';
+
+
+            return response()->download(storage_path('app/public/images/' . $filename . '.png'), $filename . '.png', ["Content-Description: File Transfer",
+                ("Content-Transfer-Encoding: Binary")]);
+        } else {
+            return response($request->all());
+        }
     }
 
 

@@ -48326,6 +48326,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -48338,6 +48341,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             avatar: false,
+            szam: '100',
             img_src: '',
             cropImg: 'default-image.png',
             dropzoneOptions: {
@@ -48404,83 +48408,89 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             }
         },
-        huszonot: function huszonot() {
-            // ToDo: meretez címre elküldeni a %os értéket, 1 controller és 1 fg
-            if (this.cropImg !== 'default-image.png') {
-                var formData = new FormData();
-                console.log(this.img_src);
-                formData.append('file', new Blob([this.$refs.cropper.getCroppedCanvas().toDataURL()]), this.img_src);
-                axios.post('/image/25', formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }).then(function () {
-                    alert("Sikeresen átméretezte!");
-                }).catch(function () {
-                    alert("Nem sikerült átméretezni!");
-                });
-            } else {
-                var _formData2 = new FormData();
-                _formData2.append('file', new Blob([this.img_src]));
-                axios.post('/image/25', _formData2, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }).then(function () {
-                    alert("Sikeresen átméretezte!");
-                }).catch(function () {
-                    alert("Nem sikerült átméretezni!");
-                });
-            }
-        },
-        otven: function otven() {
-            alert("Még meg kell írni..");
-        },
-        hetvenot: function hetvenot() {
-            alert("Még meg kell írni..");
-        },
         jpg: function jpg() {
             if (this.cropImg !== 'default-image.png') {
                 var formData = new FormData();
                 console.log(this.img_src);
-                formData.append('file', new Blob([this.$refs.cropper.getCroppedCanvas().toDataURL()]), this.img_src);
+                formData.append('file', new Blob([this.cropImg]), this.img_src);
                 axios.post('/image/JPG', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
-                    }
-                }).then
-                // (function(){
-                (function (response) {
-                    console.log(response);
 
-                    var blob = new Blob([response.data], { type: 'application/json' }),
-                        url = window.URL.createObjectURL(blob);
+                    },
+                    responseType: 'arraybuffer' //ha ez nincs ismeretlen formátumba ment
+                }).then(function (response) {
 
-                    window.open(url);
-                    alert("Sikeresen mentette jpg formátumba!");
+                    var blob = new Blob([response.data], { type: 'application/jpg' });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'pelda.jpg';
+                    link.click();
+                }).catch(function () {
+                    alert("Nem sikerült menteni más formátumba!");
+                });
+            } else {
+                var _formData2 = new FormData();
+                _formData2.append('file', new Blob([this.img_src]));
+                axios.post('/image/JPG', _formData2, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+
+                    },
+                    responseType: 'arraybuffer' //ha ez nincs ismeretlen formátumba ment
+                }).then(function (response) {
+
+                    var blob = new Blob([response.data], { type: 'application/jpg' });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'pelda.jpg';
+                    link.click();
+                }).catch(function () {
+                    alert("Nem sikerült menteni más formátumba!");
+                });
+            }
+        },
+        png: function png() {
+            if (this.cropImg !== 'default-image.png') {
+                var formData = new FormData();
+                console.log(this.img_src);
+                formData.append('file', new Blob([this.cropImg]), this.img_src);
+                axios.post('/image/PNG', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+
+                    },
+                    responseType: 'arraybuffer' //ha ez nincs ismeretlen formátumba ment
+                }).then(function (response) {
+
+                    var blob = new Blob([response.data], { type: 'application/png' });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'pelda.png';
+                    link.click();
                 }).catch(function () {
                     alert("Nem sikerült menteni más formátumba!");
                 });
             } else {
                 var _formData3 = new FormData();
                 _formData3.append('file', new Blob([this.img_src]));
-                axios.post('/image/JPG', _formData3, {
+                axios.post('/image/PNG', _formData3, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
-                    }
-                }).then(function () {
-                    alert("Sikeresen mentette jpg formátumba!");
+
+                    },
+                    responseType: 'arraybuffer' //ha ez nincs ismeretlen formátumba ment
+                }).then(function (response) {
+
+                    var blob = new Blob([response.data], { type: 'application/png' });
+                    var link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'pelda.png';
+                    link.click();
                 }).catch(function () {
-                    alert("Nem sikerült menteni más formátumba");
+                    alert("Nem sikerült menteni más formátumba!");
                 });
             }
-        },
-        download: function download() {
-            axios.get('/images/download').then(function () {
-                alert("Sikeresen mentette jpg formátumba!");
-            }).catch(function () {
-                alert("Nem sikerült menteni más formátumba");
-            });
         }
     }
 });
@@ -52736,9 +52746,14 @@ var render = function() {
             {
               staticClass: "btn btn-info btn-sm",
               staticStyle: { "margin-bottom": "12px" },
-              attrs: { type: "button" }
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.meretez(_vm.szam)
+                }
+              }
             },
-            [_vm._v("Egyéni:")]
+            [_vm._v("\n                Egyéni:\n            ")]
           ),
           _vm._v(" "),
           _vm._m(4)
