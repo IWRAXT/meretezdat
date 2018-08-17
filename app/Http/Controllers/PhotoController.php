@@ -34,29 +34,29 @@ class PhotoController extends Controller
         }
     }
 
-    public function huszonot(Request $request)
-    {
-        if ($request->hasFile('file')) {
-
-            $filename = $request->file('file')->getClientOriginalName();
-            $photo = Photo::where('name', $filename)->first();
-            $img = Image::make(file_get_contents(request()->file('file')));
-
-//            $img=Image::make( request()->file('file'));  //Ez simán nem működik
-
-            $width = $img->width();
-
-            $img->resize($width * 0.25, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save(storage_path('app/public/images/' . $filename));
-
-
-            $photo->name = $filename;
-            return response('ok', 200);
-        } else {
-            return response($request->all());
-        }
-    }
+//    public function huszonot(Request $request)
+//    {
+//        if ($request->hasFile('file')) {
+//
+//            $filename = $request->file('file')->getClientOriginalName();
+//            $photo = Photo::where('name', $filename)->first();
+//            $img = Image::make(file_get_contents(request()->file('file')));
+//
+////            $img=Image::make( request()->file('file'));  //Ez simán nem működik
+//
+//            $width = $img->width();
+//
+//            $img->resize($width * 0.25, null, function ($constraint) {
+//                $constraint->aspectRatio();
+//            })->save(storage_path('app/public/images/' . $filename));
+//
+//
+//            $photo->name = $filename;
+//            return response('ok', 200);
+//        } else {
+//            return response($request->all());
+//        }
+//    }
 
     public function meretez(Request $request)
     {
@@ -69,12 +69,17 @@ class PhotoController extends Controller
 //            $img=Image::make( request()->file('file'));  //Ez simán nem működik
 
             $width = $img->width();
-            dd($request->meret);
             $szam = ($request->meret) / 100;
 
-            $img->resize($width * $szam, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save(storage_path('app/public/images/' . $filename));
+            if ($request->radio === true) {
+                $img->resize($width * $szam, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            } else {
+                $img->resize($width * $szam, null);
+            }
+
+            $img->save(storage_path('app/public/images/' . $filename));
 
 
             $photo->name = $filename;
@@ -84,7 +89,8 @@ class PhotoController extends Controller
         }
     }
 
-    public function jpg(Request $request)
+    public
+    function jpg(Request $request)
     {
 
         if ($request->hasFile('file')) {
@@ -105,14 +111,18 @@ class PhotoController extends Controller
 //
 
 
-            return response()->download(storage_path('app/public/images/' . $filename . '.jpg'), $filename . '.jpg', ["Content-Description: File Transfer",
-                ("Content-Transfer-Encoding: Binary")]);
+            return response()->download(storage_path('app/public/images/' . $filename . '.jpg'), $filename . '.jpg',
+                [
+                    "Content-Description: File Transfer",
+                    "Content-Transfer-Encoding: Binary"
+                ]);
         } else {
             return response($request->all());
         }
     }
 
-    public function png(Request $request)
+    public
+    function png(Request $request)
     {
 
         if ($request->hasFile('file')) {
@@ -136,46 +146,23 @@ class PhotoController extends Controller
     }
 
 
-
-//    public function upload(Request $request)
-//    {
-//
-//        if ($request->hasFile('file')) {
-//
-//            $photo=new Photo();
-//            $photo->name=$request->file('file')->getClientOriginalName();
-//            $path = $request->file('file')->storeAs('public/images', $photo->name);
-//            Image::make(storage_path('app/'.$path))
-//                ->resize(100, 100)
-//                ->save();
-//            $photo->save();
-//
-//            return response()->json(['success'=>$photo->name]);
-//
-//        } else {
-//            return redirect('/')->with('success','Nincs file kiválasztva');
-//        }
-//
-//    }
-
-
-    public function show($id)
+    public
+    function show($id)
     {
         //
     }
 
-
-    public function edit($id)
+    public
+    function edit($id)
     {
         //
     }
 
-
-    public function update(Request $request, $id)
+    public
+    function update(Request $request, $id)
     {
         //
     }
-
 
     public
     function destroy($id)

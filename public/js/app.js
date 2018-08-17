@@ -48326,9 +48326,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -48342,6 +48339,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             avatar: false,
             szam: '100',
+            radio: false,
             img_src: '',
             cropImg: 'default-image.png',
             dropzoneOptions: {
@@ -48366,24 +48364,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.img_src = '/storage/images/' + response;
             this.$refs.cropper.replace(this.img_src);
         },
-        cropImage: function cropImage() {
-            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
-        },
         rotate: function rotate() {
             this.$refs.cropper.rotate(90);
+            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
         },
         scaleX: function scaleX() {
             this.$refs.cropper.scaleX(-1);
+            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
         },
         scaleY: function scaleY() {
             this.$refs.cropper.scaleY(-1);
+            this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
         },
-        meretez: function meretez($meret) {
+        meretez: function meretez($meret, $radio) {
             if (this.cropImg !== 'default-image.png') {
                 var formData = new FormData();
                 console.log(this.img_src);
-                formData.append('file', new Blob([this.$refs.cropper.getCroppedCanvas().toDataURL()]), this.img_src);
+                formData.append('file', new Blob([this.cropImg]), this.img_src);
                 formData.append('meret', $meret);
+                formData.append('radio', $radio);
 
                 axios.post('/image/meretez', formData, {
                     headers: {
@@ -48396,7 +48395,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             } else {
                 var _formData = new FormData();
-                _formData.append('file', new Blob([this.img_src]));
+                _formData.append('file', this.img_src);
+                _formData.append('meret', $meret);
                 axios.post('/image/meretez', _formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -48431,7 +48431,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             } else {
                 var _formData2 = new FormData();
-                _formData2.append('file', new Blob([this.img_src]));
+                _formData2.append('file', this.img_src);
                 axios.post('/image/JPG', _formData2, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -48473,7 +48473,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             } else {
                 var _formData3 = new FormData();
-                _formData3.append('file', new Blob([this.img_src]));
+                _formData3.append('file', this.img_src);
                 axios.post('/image/PNG', _formData3, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -52665,23 +52665,6 @@ var render = function() {
                   on: { click: _vm.scaleY }
                 },
                 [_vm._v("Tükrözés"), _c("br"), _vm._v("x-tengelyre")]
-              ),
-              _vm._v(" "),
-              _c("br"),
-              _c("br"),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-secondary btn-sm",
-                  attrs: { type: "button" },
-                  on: { click: _vm.cropImage }
-                },
-                [
-                  _vm._v("Szerkesztés"),
-                  _c("br"),
-                  _vm._v("kész\n                ")
-                ]
               )
             ]
           )
@@ -52693,7 +52676,7 @@ var render = function() {
           _c(
             "div",
             {
-              staticClass: "d-flex justify-content-around  mb-3",
+              staticClass: "d-flex justify-content-around  mb-4",
               staticStyle: { "padding-top": "6px" }
             },
             [
@@ -52737,33 +52720,65 @@ var render = function() {
                   }
                 },
                 [_vm._v("75%")]
-              )
+              ),
+              _vm._v(" "),
+              _c("div", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.szam,
+                      expression: "szam"
+                    }
+                  ],
+                  staticStyle: {
+                    width: "30px",
+                    height: "30px",
+                    "font-weight": "bold"
+                  },
+                  domProps: { value: _vm.szam },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.szam = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info btn-sm",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.meretez(_vm.szam)
+                      }
+                    }
+                  },
+                  [_vm._v("%")]
+                )
+              ])
             ]
           ),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-info btn-sm",
-              staticStyle: { "margin-bottom": "12px" },
-              attrs: { type: "button" },
-              on: {
-                click: function($event) {
-                  _vm.meretez(_vm.szam)
-                }
-              }
-            },
-            [_vm._v("\n                Egyéni:\n            ")]
-          ),
-          _vm._v(" "),
-          _vm._m(4)
+          _c("br"),
+          _c("label", { staticClass: "radio-inline" }, [
+            _c("input", {
+              attrs: { type: "radio", model: _vm.radio, name: "optradio" }
+            }),
+            _c("b", [_vm._v("Méretarány\n            megtartásával")])
+          ])
         ]),
+        _vm._v(" "),
+        _vm._m(4),
         _vm._v(" "),
         _vm._m(5),
         _vm._v(" "),
         _vm._m(6),
-        _vm._v(" "),
-        _vm._m(7),
         _vm._v(" "),
         _c("div", { staticClass: "content" }, [
           _c(
@@ -52787,7 +52802,8 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-info btn-sm",
-                  attrs: { type: "button" }
+                  attrs: { type: "button" },
+                  on: { click: _vm.png }
                 },
                 [_vm._v("PNG")]
               ),
@@ -52808,16 +52824,6 @@ var render = function() {
                   attrs: { type: "button" }
                 },
                 [_vm._v("GIF")]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-dark btn-sm",
-                  attrs: { type: "button" },
-                  on: { click: _vm.download }
-                },
-                [_vm._v("Download")]
               )
             ]
           )
@@ -52873,15 +52879,6 @@ var staticRenderFns = [
     return _c("button", { staticClass: "collapsible" }, [
       _c("i", { staticClass: "material-icons" }, [_vm._v("collections")]),
       _vm._v(" Kép átméretezés")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "radio-inline" }, [
-      _c("input", { attrs: { type: "radio", name: "optradio" } }),
-      _vm._v("Méretarány\n                megtartásával")
     ])
   },
   function() {

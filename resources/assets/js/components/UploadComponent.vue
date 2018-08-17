@@ -55,26 +55,24 @@
                     <button type="button" class="btn btn-info btn-sm" @click="scaleX">Tükrözés<br>y-tengelyre</button>
                     <br><br>
                     <button type="button" class="btn btn-info btn-sm" @click="scaleY">Tükrözés<br>x-tengelyre</button>
-                    <br><br>
-                    <button type="button" class="btn btn-secondary btn-sm" @click="cropImage">Szerkesztés<br>kész
-                    </button>
+
                 </div>
             </div>
 
             <button class="collapsible"><i class="material-icons">collections</i> Kép átméretezés</button>
             <div class="content">
-                <div class="d-flex justify-content-around  mb-3" style="padding-top: 6px">
+                <div class="d-flex justify-content-around  mb-4" style="padding-top: 6px">
                     <button type="button" class="btn btn-info btn-sm" @click="meretez(25)">25%</button>
                     <button type="button" class="btn btn-info btn-sm" @click="meretez(50)">50%</button>
                     <button type="button" class="btn btn-info btn-sm" @click="meretez(75)">75%</button>
+                    <div>
+                        <input v-model="szam" style="width: 30px; height: 30px; font-weight: bold">
+                        <button type="button" class="btn btn-info btn-sm" @click="meretez(szam)">%</button>
+                    </div>
                 </div>
-                <button type="button" class="btn btn-info btn-sm" style="margin-bottom: 12px" @click="meretez(szam)">
-                    Egyéni:
-                </button>
-                <!--<input :model="szama" >-->
-                <!--<p>{{szama}}</p>-->
-                <label class="radio-inline"><input type="radio" name="optradio">Méretarány
-                    megtartásával</label>
+
+                <br><label class="radio-inline"><input type="radio" :model="radio" name="optradio"><b>Méretarány
+                megtartásával</b></label>
             </div>
 
             <button class="collapsible"><i class="material-icons">collections</i> Válassz speciális réteget</button>
@@ -91,10 +89,9 @@
             <div class="content">
                 <div class="d-flex justify-content-around  mb-4" style="padding-top: 6px">
                     <button type="button" class="btn btn-info btn-sm" @click="jpg">JPG</button>
-                    <button type="button" class="btn btn-info btn-sm">PNG</button>
+                    <button type="button" class="btn btn-info btn-sm" @click="png">PNG</button>
                     <button type="button" class="btn btn-info btn-sm">BMP</button>
                     <button type="button" class="btn btn-info btn-sm">GIF</button>
-                    <button type="button" class="btn btn-dark btn-sm" @click="download">Download</button>
                 </div>
             </div>
 
@@ -118,6 +115,7 @@
             return {
                 avatar: false,
                 szam: '100',
+                radio: false,
                 img_src: '',
                 cropImg: 'default-image.png',
                 dropzoneOptions: {
@@ -145,25 +143,27 @@
                 this.img_src = '/storage/images/' + response;
                 this.$refs.cropper.replace(this.img_src);
             },
-            cropImage() {
-                this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
-            },
+
             rotate() {
                 this.$refs.cropper.rotate(90);
+                this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
             },
             scaleX() {
                 this.$refs.cropper.scaleX(-1);
+                this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
             },
             scaleY() {
                 this.$refs.cropper.scaleY(-1);
+                this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
             },
 
-            meretez($meret) {
+            meretez($meret, $radio) {
                 if (this.cropImg !== 'default-image.png') {
                     const formData = new FormData();
                     console.log(this.img_src);
-                    formData.append('file', (new Blob([this.$refs.cropper.getCroppedCanvas().toDataURL()])), this.img_src);
+                    formData.append('file', (new Blob([this.cropImg])), this.img_src);
                     formData.append('meret', $meret);
+                    formData.append('radio', $radio);
 
                     axios.post('/image/meretez', formData,
                         {
@@ -178,7 +178,8 @@
                     });
                 } else {
                     const formData = new FormData();
-                    formData.append('file', (new Blob([this.img_src])));
+                    formData.append('file', this.img_src);
+                    formData.append('meret', $meret);
                     axios.post('/image/meretez', formData,
                         {
                             headers: {
@@ -221,7 +222,7 @@
                     });
                 } else {
                     const formData = new FormData();
-                    formData.append('file', (new Blob([this.img_src])));
+                    formData.append('file', this.img_src);
                     axios.post('/image/JPG', formData,
                         {
                             headers: {
@@ -269,7 +270,7 @@
                     });
                 } else {
                     const formData = new FormData();
-                    formData.append('file', (new Blob([this.img_src])));
+                    formData.append('file', this.img_src);
                     axios.post('/image/PNG', formData,
                         {
                             headers: {
