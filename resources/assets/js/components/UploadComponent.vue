@@ -17,24 +17,38 @@
 
         </div>
 
-        <div class="container" v-show="avatar">
+        <div class="container-fluid" v-show="avatar">
 
-            <table class="table-responsive">
-                <thead>
-                <tr>
-                    <th>Szerkesztett</th>
-                    <th>Eredeti</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td><img :src="cropImg"
-                             alt="Cropped Image"/></td>
-                    <td><img :src="img_src"
-                             alt="Cropped Image"/></td>
-                </tr>
-                </tbody>
-            </table>
+            <!--<table class="table-responsive">-->
+            <!--<thead>-->
+            <!--<tr>-->
+            <!--<th>Szerkesztett</th>-->
+            <!--<th>Eredeti</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr>-->
+            <!--<td><img :src="cropImg"-->
+            <!--alt="Cropped Image"/></td>-->
+            <!--<td><img :src="img_src"-->
+            <!--alt="Cropped Image"/></td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
+            <!--</table>-->
+
+            <!--<div class="row" >-->
+            <!--<div class="col-md-6 col-sm-6">Szerkesztett</div>-->
+            <!--<div class="col-md-6 col-sm-6">Eredeti</div>-->
+            <!--</div>-->
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="fontstyle">Eredeti</div>
+                    <img :src="img_src" alt="Cropped Image"/></div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="fontstyle">Szerkesztett</div>
+                    <img :src="cropImg" alt="Cropped Image"/></div>
+
+            </div>
 
             <button class="collapsible"><i class="material-icons">collections</i> Kép szerkesztés</button>
             <div class="content">
@@ -44,9 +58,11 @@
                                 ref="cropper"
                                 :src="img_src"
                                 alt="Source Image"
-                                :cropmove="cropImage"
                                 :rotatable="true"
-                                drag-mode="crop"
+                                :drag-mode="'crop'"
+                                :view-mode="2"
+                                :auto-crop-area="1"
+                                style="max-height: 250px;"
                         >
                         </vue-cropper>
                     </div>
@@ -75,13 +91,14 @@
                     <button type="button" class="btn btn-info btn-sm" @click="meretez(50)">50%</button>
                     <button type="button" class="btn btn-info btn-sm" @click="meretez(75)">75%</button>
                     <div>
-                        <input v-model="szam" style="width: 30px; height: 30px; font-weight: bold">
+                        <input type="number" min="1" max="100" v-model="szam"
+                               style="width: 50px; height: 30px; font-weight: bold">
                         <button type="button" class="btn btn-info btn-sm" @click="meretez(szam)">%</button>
                     </div>
                 </div>
 
-                <br><label class="radio-inline"><input type="radio" :model="radio" name="optradio"><b>Méretarány
-                megtartásával</b></label>
+                <label class="radio-inline"><input type="checkbox" :model="radio" name="optradio"><b>Méretarány
+                    megtartásával</b></label>
             </div>
 
             <button class="collapsible"><i class="material-icons">collections</i> Válassz speciális réteget</button>
@@ -130,9 +147,9 @@
                 dropzoneOptions: {
                     url: '/image',
                     dictDefaultMessage: "„Kattints ide a feltöltendő kép/képek kiválasztásához," +
-                    "<br> vagy egyszerűen húzd ide a képeket.”<br><br>" +
-                    "<i class=\"fa fa-cloud-upload\"" +
-                    "style=\"font-size:36px\"></i>",
+                        "<br> vagy egyszerűen húzd ide a képeket.”<br><br>" +
+                        "<i class=\"fa fa-cloud-upload\"" +
+                        "style=\"font-size:36px\"></i>",
                     dictMaxFilesExceeded: 'Csak (max: {{maxFiles}}) file-t lehet feltölteni',
                     thumbnailWidth: 150,
                     uploadMultiple: false,
@@ -146,7 +163,7 @@
         },
 
         methods: {
-            //MaxFiles...alert()
+//MaxFiles...alert()
             afterComplete(file, response) {
                 this.avatar = true;
                 this.img_src = '/storage/images/' + response;
@@ -303,32 +320,32 @@
             },
 
 
-            // submitFile() {
-            //     let formData = new FormData();
-            //     formData.append('file', this.file);
-            //
-            //     axios.post('/image',
-            //         formData,
-            //         {
-            //             headers: {
-            //                 'Content-Type': 'multipart/form-data'
-            //             }
-            //         }
-            //     ).then(function () {
-            //         console.log('SUCCESS!!');
-            //     })
-            //         .catch(function () {
-            //             console.log('FAILURE!!');
-            //         });
-            // },
-            //
-            // handleFileUpload() {
-            //     this.file = this.$refs.file.files[0];
-            //     let reader = new FileReader();
-            //     reader.readAsDataURL(this.file);
-            //     reader.onload = event => {
-            //         this.avatar = event.target.result}
-            // }
+// submitFile() {
+//     let formData = new FormData();
+//     formData.append('file', this.file);
+//
+//     axios.post('/image',
+//         formData,
+//         {
+//             headers: {
+//                 'Content-Type': 'multipart/form-data'
+//             }
+//         }
+//     ).then(function () {
+//         console.log('SUCCESS!!');
+//     })
+//         .catch(function () {
+//             console.log('FAILURE!!');
+//         });
+// },
+//
+// handleFileUpload() {
+//     this.file = this.$refs.file.files[0];
+//     let reader = new FileReader();
+//     reader.readAsDataURL(this.file);
+//     reader.onload = event => {
+//         this.avatar = event.target.result}
+// }
         },
     };
 
@@ -375,6 +392,16 @@
         width: 100%;
         border-radius: 3px;
         opacity: 0.7;
+    }
+
+    .fontstyle {
+        background-color: #777;
+        color: white;
+        font-size: 16px;
+        width: 100%;
+        border-radius: 3px;
+        opacity: 0.7;
+        font-weight: bold;
     }
 
     .active, .collapsible:hover {
@@ -429,4 +456,10 @@
     .btn-edit {
         margin-bottom: 10px;
     }
+
+    .row img {
+        max-width: 100%;
+        height: auto;
+    }
+
 </style>

@@ -47837,7 +47837,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\nimg[data-v-4e19f7d5] {\n\n    max-height: 300px;\n\n    max-width: 400px;\n}\nbutton[data-v-4e19f7d5] {\n    font-weight: bold;\n    color: white;\n    font-size: 14px;\n    border-radius: 6px;\n}\n.material-icons[data-v-4e19f7d5] {\n    font-size: small;\n}\nvue-dropzone[data-v-4e19f7d5] {\n    padding-top: 12px;\n    height: 300px;\n    width: auto;\n}\n.collapsible[data-v-4e19f7d5] {\n    background-color: #777;\n    color: white;\n    cursor: pointer;\n    padding: 6px;\n    border: none;\n    text-align: left;\n    outline: none;\n    font-size: 16px;\n    width: 100%;\n    border-radius: 3px;\n    opacity: 0.7;\n}\n.active[data-v-4e19f7d5], .collapsible[data-v-4e19f7d5]:hover {\n    background-color: #555;\n}\n.collapsible[data-v-4e19f7d5]:after {\n    content: '+';\n    color: white;\n    font-weight: bold;\n    float: right;\n    margin-left: 5px;\n}\n.active[data-v-4e19f7d5]:after {\n    content: \"\\2212\";\n}\n.content[data-v-4e19f7d5] {\n    padding: 0;\n    max-height: 0;\n    overflow: hidden;\n    -webkit-transition: max-height 0.2s ease-out;\n    transition: max-height 0.2s ease-out;\n    background-color: #f1f1f1;\n}\ntr[data-v-4e19f7d5] {\n    horiz-align: center;\n}\nthead[data-v-4e19f7d5] {\n    background-color: #777;\n    opacity: 0.7;\n    color: white;\n    font-size: 16px;\n    horiz-align: center;\n}\ntd[data-v-4e19f7d5] {\n    width: 600px;\n}\ntable[data-v-4e19f7d5] {\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border-radius: 3px;\n}\n.btn-edit[data-v-4e19f7d5] {\n    margin-bottom: 10px;\n}\n", ""]);
+exports.push([module.i, "\nimg[data-v-4e19f7d5] {\n\n    max-height: 300px;\n\n    max-width: 400px;\n}\nbutton[data-v-4e19f7d5] {\n    font-weight: bold;\n    color: white;\n    font-size: 14px;\n    border-radius: 6px;\n}\n.material-icons[data-v-4e19f7d5] {\n    font-size: small;\n}\nvue-dropzone[data-v-4e19f7d5] {\n    padding-top: 12px;\n    height: 300px;\n    width: auto;\n}\n.collapsible[data-v-4e19f7d5] {\n    background-color: #777;\n    color: white;\n    cursor: pointer;\n    padding: 6px;\n    border: none;\n    text-align: left;\n    outline: none;\n    font-size: 16px;\n    width: 100%;\n    border-radius: 3px;\n    opacity: 0.7;\n}\n.fontstyle[data-v-4e19f7d5] {\n    background-color: #777;\n    color: white;\n    font-size: 16px;\n    width: 100%;\n    border-radius: 3px;\n    opacity: 0.7;\n    font-weight: bold;\n}\n.active[data-v-4e19f7d5], .collapsible[data-v-4e19f7d5]:hover {\n    background-color: #555;\n}\n.collapsible[data-v-4e19f7d5]:after {\n    content: '+';\n    color: white;\n    font-weight: bold;\n    float: right;\n    margin-left: 5px;\n}\n.active[data-v-4e19f7d5]:after {\n    content: \"\\2212\";\n}\n.content[data-v-4e19f7d5] {\n    padding: 0;\n    max-height: 0;\n    overflow: hidden;\n    -webkit-transition: max-height 0.2s ease-out;\n    transition: max-height 0.2s ease-out;\n    background-color: #f1f1f1;\n}\ntr[data-v-4e19f7d5] {\n    horiz-align: center;\n}\nthead[data-v-4e19f7d5] {\n    background-color: #777;\n    opacity: 0.7;\n    color: white;\n    font-size: 16px;\n    horiz-align: center;\n}\ntd[data-v-4e19f7d5] {\n    width: 600px;\n}\ntable[data-v-4e19f7d5] {\n    display: block;\n    margin-left: auto;\n    margin-right: auto;\n    border-radius: 3px;\n}\n.btn-edit[data-v-4e19f7d5] {\n    margin-bottom: 10px;\n}\n.row img[data-v-4e19f7d5] {\n    max-width: 100%;\n    height: auto;\n}\n\n", ""]);
 
 // exports
 
@@ -48222,6 +48222,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue2_dropzone___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue2_dropzone__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_cropperjs__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_cropperjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_cropperjs__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -52589,26 +52606,24 @@ var render = function() {
             expression: "avatar"
           }
         ],
-        staticClass: "container"
+        staticClass: "container-fluid"
       },
       [
-        _c("table", { staticClass: "table-responsive" }, [
-          _vm._m(1),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-6 col-md-6" }, [
+            _c("div", { staticClass: "fontstyle" }, [_vm._v("Eredeti")]),
+            _vm._v(" "),
+            _c("img", { attrs: { src: _vm.img_src, alt: "Cropped Image" } })
+          ]),
           _vm._v(" "),
-          _c("tbody", [
-            _c("tr", [
-              _c("td", [
-                _c("img", { attrs: { src: _vm.cropImg, alt: "Cropped Image" } })
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c("img", { attrs: { src: _vm.img_src, alt: "Cropped Image" } })
-              ])
-            ])
+          _c("div", { staticClass: "col-lg-6 col-md-6" }, [
+            _c("div", { staticClass: "fontstyle" }, [_vm._v("Szerkesztett")]),
+            _vm._v(" "),
+            _c("img", { attrs: { src: _vm.cropImg, alt: "Cropped Image" } })
           ])
         ]),
         _vm._v(" "),
-        _vm._m(2),
+        _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "content" }, [
           _c("div", { staticClass: "row" }, [
@@ -52621,12 +52636,14 @@ var render = function() {
               [
                 _c("vue-cropper", {
                   ref: "cropper",
+                  staticStyle: { "max-height": "250px" },
                   attrs: {
                     src: _vm.img_src,
                     alt: "Source Image",
-                    cropmove: _vm.cropImage,
                     rotatable: true,
-                    "drag-mode": "crop"
+                    "drag-mode": "crop",
+                    "view-mode": 2,
+                    "auto-crop-area": 1
                   }
                 })
               ],
@@ -52690,7 +52707,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(3),
+        _vm._m(2),
         _vm._v(" "),
         _c("div", { staticClass: "content" }, [
           _c(
@@ -52753,10 +52770,11 @@ var render = function() {
                     }
                   ],
                   staticStyle: {
-                    width: "30px",
+                    width: "50px",
                     height: "30px",
                     "font-weight": "bold"
                   },
+                  attrs: { type: "number", min: "1", max: "100" },
                   domProps: { value: _vm.szam },
                   on: {
                     input: function($event) {
@@ -52785,20 +52803,19 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c("br"),
           _c("label", { staticClass: "radio-inline" }, [
             _c("input", {
-              attrs: { type: "radio", model: _vm.radio, name: "optradio" }
+              attrs: { type: "checkbox", model: _vm.radio, name: "optradio" }
             }),
-            _c("b", [_vm._v("Méretarány\n            megtartásával")])
+            _c("b", [_vm._v("Méretarány\n                megtartásával")])
           ])
         ]),
+        _vm._v(" "),
+        _vm._m(3),
         _vm._v(" "),
         _vm._m(4),
         _vm._v(" "),
         _vm._m(5),
-        _vm._v(" "),
-        _vm._m(6),
         _vm._v(" "),
         _c("div", { staticClass: "content" }, [
           _c(
@@ -52869,18 +52886,6 @@ var staticRenderFns = [
       _vm._v(
         "\n            a képek lekicsinyítésével, mivel itt te is megtudod tenni mindössze 3 lépésben!\n        "
       )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Szerkesztett")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Eredeti")])
-      ])
     ])
   },
   function() {
