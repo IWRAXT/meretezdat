@@ -38,24 +38,33 @@
 
             <button class="collapsible"><i class="material-icons">collections</i> Kép szerkesztés</button>
             <div class="content">
-                <div class="col-sm-10" style="padding-top: 6px; padding-bottom: 6px">
-                    <vue-cropper
-                            ref="cropper"
-                            :src="img_src"
-                            alt="Source Image"
-                            :cropmove="cropImage"
-                            :rotatable="true"
-                            :img-style="{ 'width': '200px', 'height': '200px' }"
-                            drag-mode="crop">
-                    </vue-cropper>
-                </div>
-                <div class="col-sm-2" style="padding-top: 6px; padding-bottom: 6px">
-                    <button type="button" class="btn btn-info btn-sm" @click="rotate">Forgatás</button>
-                    <br><br>
-                    <button type="button" class="btn btn-info btn-sm" @click="scaleX">Tükrözés<br>y-tengelyre</button>
-                    <br><br>
-                    <button type="button" class="btn btn-info btn-sm" @click="scaleY">Tükrözés<br>x-tengelyre</button>
-
+                <div class="row">
+                    <div class="col-md-9 col-sm-12" style="padding-top: 6px; padding-bottom: 6px;">
+                        <vue-cropper
+                                ref="cropper"
+                                :src="img_src"
+                                alt="Source Image"
+                                :cropmove="cropImage"
+                                :rotatable="true"
+                                drag-mode="crop"
+                        >
+                        </vue-cropper>
+                    </div>
+                    <div class="col-md-3 col-sm-12" style="padding-top: 6px; padding-bottom: 6px">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-4">
+                                <button type="button" class="btn btn-info btn-edit" @click="rotate">Forgatás</button>
+                            </div>
+                            <div class="col-md-12 col-sm-4">
+                                <button type="button" class="btn btn-info btn-edit" @click="scaleX">Tükrözés<br>y-tengelyre
+                                </button>
+                            </div>
+                            <div class="col-md-12 col-sm-4">
+                                <button type="button" class="btn btn-info btn-edit" @click="scaleY">Tükrözés<br>x-tengelyre
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -417,5 +426,7 @@
 
     }
 
-
+    .btn-edit {
+        margin-bottom: 10px;
+    }
 </style>
